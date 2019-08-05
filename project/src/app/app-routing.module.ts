@@ -7,8 +7,9 @@ import { EditMedicineComponent } from './edit-medicine/edit-medicine.component';
 const routes: Routes = [
   { path: 'add-medicine', component: AddMedicineComponent },
   { path: 'edit-medicine', component: EditMedicineComponent},
-  { path: '', component: ListMedicineComponent, pathMatch: 'full' },
-  { path: 'Medicines', component: ListMedicineComponent, pathMatch: 'full' }
+  { path: '', component: ListMedicineComponent, pathMatch: 'full' }
+  /*,
+  { path: 'Medicines', component: ListMedicineComponent, pathMatch: 'full' }*/
 ];
 
 @NgModule({
