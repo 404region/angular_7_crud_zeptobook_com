@@ -35,7 +35,7 @@ export class ListProductsComponent implements OnInit {
       this.getAllProducts();
     });
   }
-  
+
   updateProduct(product: ProductModel){
     localStorage.removeItem("productId");
     localStorage.setItem("productId", product._id);
