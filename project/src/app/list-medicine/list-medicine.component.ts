@@ -20,6 +20,7 @@ export class ListMedicineComponent implements OnInit {
 
   getAllMedicines(): void {
     this.medicineService.getAllMedicines().subscribe(data=>{
+      console.log(data);
       this.medicines = data;
     });
   };
@@ -29,10 +30,16 @@ export class ListMedicineComponent implements OnInit {
   }
 
   deleteMedicine(medicine: MedicineModel){
-    
     this.medicineService.deleteMedicine(medicine._id).subscribe(data=>{
       console.log(data);
       this.getAllMedicines();
+    });
+  }
+  
+  searchMedicine(medicine: MedicineModel){
+    this.medicineService.getMedicineById(medicine._id).subscribe(data=>{
+      console.log(data);
+      //this.getAllMedicines();
     });
   }
   
@@ -41,6 +48,4 @@ export class ListMedicineComponent implements OnInit {
     localStorage.setItem("medicineId", medicine._id);
     this.router.navigate(['edit-medicine']);
   }
-
-
 }

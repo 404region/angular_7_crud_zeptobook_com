@@ -1,14 +1,7 @@
-<div class="col-md-3">
+<div class="col-md-8">
     <h2 class="text-center">Add Medicine</h2>
     <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Name:</label>
-        <input type="text" formControlName="name" placeholder="Имя" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-        <div *ngIf="submitted && f.name.errors">
-          <div *ngIf="f.name.errors.required">Name is required</div>
-        </div>
-      </div>
-  
+      
       <div class="form-group">
           <label>NameLat:</label>
           <input type="text" formControlName="nameLat" placeholder="Латинское название" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nameLat.errors }">
@@ -18,19 +11,28 @@
         </div>
 
       <div class="form-group">
+        <label>Name:</label>
+        <input type="text" formControlName="name" placeholder="Имя" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+        <!--<div *ngIf="submitted && f.name.errors">
+          <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>-->
+      </div>
+  
+
+      <div class="form-group">
         <label>Description:</label>
-        <input type="text" formControlName="description" placeholder="Description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
-        <div *ngIf="submitted && f.description.errors">
+        <textarea formControlName="description" placeholder="Description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+        <!--<div *ngIf="submitted && f.description.errors">
           <div *ngIf="f.description.errors.required">Description is required</div>
-        </div>
+        </div>-->
       </div>
   
       <div class="form-group">
         <label>Symptoms:</label>
-        <input type="text" formControlName="symptoms" placeholder="Symptoms" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.symptoms.errors }">
-        <div *ngIf="submitted && f.symptoms.errors">
+        <textarea formControlName="symptoms" placeholder="Symptoms" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.symptoms.errors }"></textarea>
+        <!--<div *ngIf="submitted && f.symptoms.errors">
           <div *ngIf="f.symptoms.errors.required">Symptoms is required</div>
-        </div>
+        </div>-->
       </div>
     
       <button type="submit"  class="btn btn-info">Save</button>

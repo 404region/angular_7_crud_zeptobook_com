@@ -9,13 +9,17 @@ import { MedicineService } from './medicine.service';
 import { AddMedicineComponent } from './add-medicine/add-medicine.component';
 import { EditMedicineComponent } from './edit-medicine/edit-medicine.component';
 import { ListMedicineComponent } from './list-medicine/list-medicine.component';
+import { MedicineComponent } from './medicine/medicine.component';
+import { SearchMedicineComponent } from './search-medicine/search-medicine.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddMedicineComponent,
     EditMedicineComponent,
-    ListMedicineComponent
+    ListMedicineComponent,
+    MedicineComponent,
+    SearchMedicineComponent
   ],
   imports: [
     BrowserModule,

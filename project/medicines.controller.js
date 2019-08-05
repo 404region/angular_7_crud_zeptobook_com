@@ -11,10 +11,10 @@ exports.create = (req, res) => {
 
     // Create a Medicine
     const medicine = new Medicine({
-        title: req.body.title || "No medicine title", 
-        description: req.body.description,
-        price: req.body.price,
-        company: req.body.company
+        nameLat: req.body.nameLat || "No medicine nameLat", 
+        name: req.body.name,
+        symptoms: req.body.symptoms,
+        description: req.body.description
     });
 
     // Save Medicine in the database
@@ -74,10 +74,10 @@ exports.update = (req, res) => {
 
     // Find and update medicine with the request body
     Medicine.findByIdAndUpdate(req.params.medicineId, {
-        title: req.body.title || "No medicine title", 
-        description: req.body.description,
-        price: req.body.price,
-        company: req.body.company
+        nameLat: req.body.nameLat || "No medicine nameLat", 
+        name: req.body.name,
+        symptoms: req.body.symptoms,
+        description: req.body.description
     }, {new: true})
     .then(medicine => {
         if(!medicine) {

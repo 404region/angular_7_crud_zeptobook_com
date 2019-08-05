@@ -19,15 +19,16 @@ export class AddMedicineComponent implements OnInit {
   ngOnInit() {
     this.addForm = this.formBuilder.group({
       _id: [],
-      name: ['', Validators.required],
       nameLat: ['', Validators.required],
-      description: ['', Validators.required],
-      symptoms: ['', Validators.required]
+      name: [''],
+      description: [''],
+      symptoms: ['']
     });
   }
 
   onSubmit(){
     this.submitted = true;
+    console.log(this.addForm.value);
     
     if(this.addForm.valid){
       this.medicineService.addMedicine(this.addForm.value)
