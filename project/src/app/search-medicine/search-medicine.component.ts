@@ -36,19 +36,37 @@ export class SearchMedicineComponent implements OnInit {
     console.log(this.searchForm.value);
     let query = {query: {}};
     let queryParams = '';
+    let queryOr = '';
 
     //test
-    this.searchForm.value.keyWords = 'Apis';
-    console.log(this.searchForm.value.keyWords);
+    this.searchForm.value.keyWords = this.searchForm.value.keyWords || 'Apis';
+    console.log(this.searchForm.value);
 
     if(this.searchForm.value && this.searchForm.value.keyWords) {
       // ищем по имени
       if(this.searchForm.value.byName ||
-        (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) {
+        (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) 
+      {
           queryParams = 'byName';
+          queryOr = "$or";
           query.query = { "$or": [{nameLat: this.searchForm.value.keyWords}, {name: this.searchForm.value.keyWords}] };
-          //this.medicamentsArray = [];
-        }
+      }
+      /*
+      // ищем по симптомом
+      if(this.searchForm.value.bySymptoms) {
+        query.query[queryOr] = query.query[queryOr] || [];
+        query.query[queryOr].push({symptoms: this.searchForm.value.keyWords});
+        //console.log('query', query.query[queryOr]);
+      }
+      // ищем по описанию
+      if(this.searchForm.value.byDescription) {
+        query.query[queryOr] = query.query[queryOr] || [];
+        query.query[queryOr].push({description: this.searchForm.value.keyWords});
+      }
+      // ищем по статьям
+      if(this.searchForm.value.byArticles) {
+        // Видимо в другой коллекции
+      }*/
         
       console.log('query', query);
 
@@ -57,7 +75,6 @@ export class SearchMedicineComponent implements OnInit {
         .subscribe( data => {
           console.log('Попали в searchMedicine класса search-medicine');
           this.medicamentsArray = data;
-         // this.onChanged.emit('emit');
                   
          //DataService
          this.seachMedicamentsData.changeSearchArr(data);
