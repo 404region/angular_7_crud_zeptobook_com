@@ -15,6 +15,11 @@ export class MedicineService {
     return this.http.get<MedicineModel[]>(this.baseurl + 'Medicines');
   }
 
+  findMany(val: object){
+    console.log('findManyBy medicine service');
+    return this.http.post(this.baseurl + 'Medicines', val);
+  }
+
   getMedicineById(id: string){
     return this.http.get<MedicineModel>(this.baseurl + 'Medicines' + '/' + id);
   }

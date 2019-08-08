@@ -33,7 +33,7 @@ export class AddMedicineComponent implements OnInit {
     if(this.addForm.valid){
       this.medicineService.addMedicine(this.addForm.value)
       .subscribe( data => {
-        console.log(data);
+        console.log('data: ' + data);
         this.router.navigate(['']);
       });
     }

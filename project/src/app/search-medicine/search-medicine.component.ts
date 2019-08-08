@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MedicineService } from '../medicine.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { MedicineModel } from '../MedicineModel';
 
 @Component({
   selector: 'app-search-medicine',
@@ -13,6 +14,9 @@ export class SearchMedicineComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router, private medicineService: MedicineService) { }
 
+  @Output() onChanged = new EventEmitter<any>();
+
+  @Output() medicamentsArray: any;
   searchForm: FormGroup;
   submitted = false;
 
@@ -25,18 +29,42 @@ export class SearchMedicineComponent implements OnInit {
       byArticles: ['']
     });
   }
-
-  onSubmit(){
+  
+  searchMedicine(){
     this.submitted = true;
     console.log(this.searchForm.value);
-    
-    if(this.searchForm.valid){
-      this.medicineService.addMedicine(this.searchForm.value)
-      .subscribe( data => {
-        console.log(data);
-        this.router.navigate(['']);
-      });
+    let query = {query: {}};
+    let queryParams = '';
+
+    //test
+    this.searchForm.value.keyWords = 'Apis';
+    console.log(this.searchForm.value.keyWords);
+
+    if(this.searchForm.value && this.searchForm.value.keyWords) {
+      // ищем по имени
+      if(this.searchForm.value.byName ||
+        (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) {
+          queryParams = 'byName';
+          query.query = { "$or": [{nameLat: this.searchForm.value.keyWords}, {name: this.searchForm.value.keyWords}] };
+          //this.medicamentsArray = [];
+        }
+        
+      console.log('query', query);
+
+      //if(this.searchForm.valid){
+        this.medicineService.findMany(query)
+        .subscribe( data => {
+          console.log('Попали в searchMedicine класса search-medicine');
+          this.medicamentsArray = data;
+          this.onChanged.emit('emit');
+          this.router.navigate(['']);
+        });
+      //}
     }
+      //{"$or": [{nameLat: "Apis"}, {name: "Apis"}]}
+
+    
   }
+
 
 }

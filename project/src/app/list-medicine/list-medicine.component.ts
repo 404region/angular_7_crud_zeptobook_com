@@ -1,18 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input  } from '@angular/core';
 import { Router } from "@angular/router";
 import { MedicineModel } from '../MedicineModel';
 import { MedicineService } from '../medicine.service';
+import { SearchMedicineComponent } from '../search-medicine/search-medicine.component';
 
 @Component({
   selector: 'app-list-medicine',
   templateUrl: './list-medicine.component.html',
   styleUrls: ['./list-medicine.component.css']
 })
-export class ListMedicineComponent implements OnInit {
+export class ListMedicineComponent implements OnInit  {
+  //@ViewChild(SearchMedicineComponent) child;
 
+  @Input() medicamentsArray: any;
   medicines: MedicineModel[];
 
   constructor(private medicineService: MedicineService, private router: Router) { }
+
+  /*ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+    this.searchMedicamentsArray = this.child.medicamentsArray;
+    this.medicines = this.searchMedicamentsArray;
+    this.getAllMedicines();
+  }*/
+
+  @Input() onChanged(data: any) {
+    console.log(' Input data: ', data);
+  }
 
   ngOnInit() {
     this.getAllMedicines();
@@ -20,12 +34,13 @@ export class ListMedicineComponent implements OnInit {
 
   getAllMedicines(): void {
     this.medicineService.getAllMedicines().subscribe(data=>{
-      console.log(data);
+      console.log('getAllMedicines', data);
       this.medicines = data;
     });
   };
 
   addMedicine(): void {
+    console.log('searchMedicamentsArray: ', this.medicamentsArray);
     this.router.navigate(['add-medicine']);
   }
 
@@ -39,7 +54,7 @@ export class ListMedicineComponent implements OnInit {
   searchMedicine(medicine: MedicineModel){
     this.medicineService.getMedicineById(medicine._id).subscribe(data=>{
       console.log(data);
-      //this.getAllMedicines();
+      this.getAllMedicines();
     });
   }
   

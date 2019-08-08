@@ -2,6 +2,9 @@ const Medicine = require('./medicine.model.js');
 
 //Create new Medicine
 exports.create = (req, res) => {
+    console.log('exports create');
+    console.log(req.body);
+
     // Request validation
     if(!req.body) {
         return res.status(400).send({
@@ -9,29 +12,73 @@ exports.create = (req, res) => {
         });
     }
 
-    // Create a Medicine
-    const medicine = new Medicine({
-        nameLat: req.body.nameLat || "No medicine nameLat", 
-        name: req.body.name,
-        symptoms: req.body.symptoms,
-        description: req.body.description
-    });
-
-    // Save Medicine in the database
-    medicine.save()
-    .then(data => {
-        console.log(data);
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Something wrong while creating the medicine."
+    // Определяем, что это поиск, а не добавление нового средства в бд
+    // костыль по сути, просто не знаю пока как вызвать нужный метод
+    if(req.body.query) {
+        console.log('мы попали в поиск');
+        
+        Medicine.find(req.body.query)
+        .then(medicines => {
+            res.send(medicines);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while retrieving medicines."
+            });
         });
-    });
+    } else {
+        // Create a Medicine
+        const medicine = new Medicine({
+            nameLat: req.body.nameLat || "No medicine nameLat", 
+            name: req.body.name,
+            symptoms: req.body.symptoms,
+            description: req.body.description
+        });
+
+        // Save Medicine in the database
+        medicine.save()
+        .then(data => {
+            console.log(data);
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while creating the medicine."
+            });
+        });
+    }
+
 };
 
 // Retrieve all medicines from the database.
 exports.findAll = (req, res) => {
-    Medicine.find()
+    console.log('exports.findAll req: ', req.body);
+
+    let query = {};
+    if(req.body.query)
+        query = req.body.query;
+
+    Medicine.find(query)
+    .then(medicines => {
+        res.send(medicines);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Something wrong while retrieving medicines."
+        });
+    });
+};
+
+// Retrieve medicines by name from the database.
+exports.findMany = (req, res) => {
+    console.log('req.body: ' + req.body);
+    
+    // Request validation
+    if(!req.body || !req.body.query) {
+        return res.status(400).send({
+            message: "Medicine content can not be empty"
+        });
+    }
+    //{"$or": [{nameLat: "Apis"}, {name: "Apis"}]}
+
+    Medicine.find(req.body.query)
     .then(medicines => {
         res.send(medicines);
     }).catch(err => {
@@ -62,6 +109,7 @@ exports.findOne = (req, res) => {
         });
     });
 };
+
 
 // Update a medicine
 exports.update = (req, res) => {

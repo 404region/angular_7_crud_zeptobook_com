@@ -7,6 +7,9 @@ module.exports = (app) => {
     // Retrieve all medicines
     app.get('/medicines', medicines.findAll);
 
+    // Retrieve all medicines
+    app.post('/medicines/:search', medicines.findMany);
+
     // Retrieve a single medicine with medicineId
     app.get('/medicines/:medicineId', medicines.findOne);
 
