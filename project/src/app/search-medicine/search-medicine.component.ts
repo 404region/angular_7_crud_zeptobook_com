@@ -12,13 +12,22 @@ import { MedicineModel } from '../MedicineModel';
 })
 export class SearchMedicineComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private medicineService: MedicineService) { }
 
-  @Output() onChanged = new EventEmitter<any>();
 
-  @Output() medicamentsArray: any;
+  //@Output() onChanged = new EventEmitter<any>();
+
+  medicamentsArray: any = [];
   searchForm: FormGroup;
   submitted = false;
+
+  //messageFromChild = 'Hello My World';
+  //@Output() messageEvent = new EventEmitter<string>();
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private medicineService: MedicineService) { }
+
+  /*sendMessage() {
+    this.messageEvent.emit(this.messageFromChild)
+  }*/
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
@@ -41,6 +50,9 @@ export class SearchMedicineComponent implements OnInit {
     console.log(this.searchForm.value.keyWords);
 
     if(this.searchForm.value && this.searchForm.value.keyWords) {
+      //this.messageFromChild = 'dskjdshhds';
+      //this.sendMessage();
+
       // ищем по имени
       if(this.searchForm.value.byName ||
         (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) {
@@ -56,7 +68,7 @@ export class SearchMedicineComponent implements OnInit {
         .subscribe( data => {
           console.log('Попали в searchMedicine класса search-medicine');
           this.medicamentsArray = data;
-          this.onChanged.emit('emit');
+         // this.onChanged.emit('emit');
           this.router.navigate(['']);
         });
       //}
