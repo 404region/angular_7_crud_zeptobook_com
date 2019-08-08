@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MedicineModel } from './MedicineModel';
+import { MedicineSearchDataService } from "./medicine-search-data.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private seachMedicamentsData: MedicineSearchDataService) { }
 
   baseurl: string = "http://localhost:3000/";
 

@@ -11,6 +11,7 @@ import { EditMedicineComponent } from './edit-medicine/edit-medicine.component';
 import { ListMedicineComponent } from './list-medicine/list-medicine.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import { SearchMedicineComponent } from './search-medicine/search-medicine.component';
+import { MedicineSearchDataService } from './medicine-search-data.service'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { SearchMedicineComponent } from './search-medicine/search-medicine.compo
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [MedicineService],
+  providers: [MedicineService, MedicineSearchDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { MedicineModel } from '../MedicineModel';
 import { MedicineService } from '../medicine.service';
 import { SearchMedicineComponent } from '../search-medicine/search-medicine.component';
+//DataService
+import { MedicineSearchDataService } from "../medicine-search-data.service";
 
 @Component({
   selector: 'app-list-medicine',
@@ -10,35 +12,16 @@ import { SearchMedicineComponent } from '../search-medicine/search-medicine.comp
   styleUrls: ['./list-medicine.component.css']
 })
 export class ListMedicineComponent implements OnInit  {
-  //@ViewChild(SearchMedicineComponent) child;
-
   searchMedicamentsArray: any;
   medicines: MedicineModel[];
 
- // messageFromChild: any;
-
-  constructor(private medicineService: MedicineService, private router: Router) { }
-
-  
-  /*receiveMessage($event) {
-    this.messageFromChild = $event
-    console.log('messageFromChild', this.messageFromChild);
-  }*/
-
-  /*ngAfterViewInit() {
-    console.log('ngAfterViewInit', this.child.medicamentsArray);
-    this.searchMedicamentsArray = this.child.medicamentsArray;
-
-    //this.medicines = this.searchMedicamentsArray;
-    this.getAllMedicines();
-  }*/
-
-  /*onChanged(data: any) {
-    console.log('data: ', );
-  }*/
+ //DataService
+  constructor(private medicineService: MedicineService, private router: Router, private seachMedicamentsData: MedicineSearchDataService) { }
 
   ngOnInit() {
+
     this.getAllMedicines();
+    this.getMedicinesBySearch()
   }
 
   getAllMedicines(): void {
@@ -47,6 +30,14 @@ export class ListMedicineComponent implements OnInit  {
       this.medicines = data;
     });
   };
+
+  getMedicinesBySearch(): void {
+    //DataService    
+    this.seachMedicamentsData.currentSearchArr.subscribe(currentSearchArr => {
+      this.medicines = currentSearchArr;
+      console.log('Дата сервис:' , this.medicines);
+    });
+  }
 
   addMedicine(): void {
     this.router.navigate(['add-medicine']);
