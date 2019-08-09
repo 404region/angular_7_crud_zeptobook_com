@@ -11,7 +11,9 @@ import { EditMedicineComponent } from './edit-medicine/edit-medicine.component';
 import { ListMedicineComponent } from './list-medicine/list-medicine.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import { SearchMedicineComponent } from './search-medicine/search-medicine.component';
-import { MedicineSearchDataService } from './medicine-search-data.service'
+import { MedicineSearchDataService } from './medicine-search-data.service';
+import { MedicinePageComponent } from './medicine-page/medicine-page.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { MedicineSearchDataService } from './medicine-search-data.service'
     EditMedicineComponent,
     ListMedicineComponent,
     MedicineComponent,
-    SearchMedicineComponent
+    SearchMedicineComponent,
+    MedicinePageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

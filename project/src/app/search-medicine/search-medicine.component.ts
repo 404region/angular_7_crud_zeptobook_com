@@ -36,7 +36,7 @@ export class SearchMedicineComponent implements OnInit {
     console.log(this.searchForm.value);
     let query = {query: {}};
     let queryParams = '';
-    let queryOr = '';
+    let queryOr = "$or";
 
     //test
     this.searchForm.value.keyWords = this.searchForm.value.keyWords || 'Apis';
@@ -48,15 +48,23 @@ export class SearchMedicineComponent implements OnInit {
         (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) 
       {
           queryParams = 'byName';
-          queryOr = "$or";
-          query.query = { "$or": [{nameLat: this.searchForm.value.keyWords}, {name: this.searchForm.value.keyWords}] };
+         // queryOr = "$or";
+         query.query = { "$or": [{nameLat: this.searchForm.value.keyWords}, {name: this.searchForm.value.keyWords}] };
+      
+          /*
+          // Нифига не работает
+          query.query = { "$or": [
+                                  { nameLat: {"$regex":  new RegExp(this.searchForm.value.keyWords)} },
+                                  { name: {"$regex": new RegExp(this.searchForm.value.keyWords)}  }
+                                ] 
+                        };*/
       }
-      /*
+      
       // ищем по симптомом
       if(this.searchForm.value.bySymptoms) {
         query.query[queryOr] = query.query[queryOr] || [];
         query.query[queryOr].push({symptoms: this.searchForm.value.keyWords});
-        //console.log('query', query.query[queryOr]);
+        console.log('query', query.query[queryOr]);
       }
       // ищем по описанию
       if(this.searchForm.value.byDescription) {
@@ -66,7 +74,7 @@ export class SearchMedicineComponent implements OnInit {
       // ищем по статьям
       if(this.searchForm.value.byArticles) {
         // Видимо в другой коллекции
-      }*/
+      }
         
       console.log('query', query);
 

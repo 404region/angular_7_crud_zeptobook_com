@@ -19,7 +19,6 @@ export class ListMedicineComponent implements OnInit  {
   constructor(private medicineService: MedicineService, private router: Router, private seachMedicamentsData: MedicineSearchDataService) { }
 
   ngOnInit() {
-
     this.getAllMedicines();
     this.getMedicinesBySearch()
   }
@@ -43,23 +42,36 @@ export class ListMedicineComponent implements OnInit  {
     this.router.navigate(['add-medicine']);
   }
 
-  deleteMedicine(medicine: MedicineModel){
+  medicinePage(medicine): void {
+    console.log('medicinePage()', medicine);
+    this.router.navigate(['medicine-page']);
+  } 
+
+  deleteMedicine(medicine: MedicineModel): void {
     this.medicineService.deleteMedicine(medicine._id).subscribe(data=>{
       console.log(data);
       this.getAllMedicines();
     });
   }
   
-  searchMedicine(medicine: MedicineModel){
+  searchMedicine(medicine: MedicineModel): void {
     this.medicineService.getMedicineById(medicine._id).subscribe(data=>{
       console.log(data);
       this.getAllMedicines();
     });
   }
   
-  updateMedicine(medicine: MedicineModel){
+  updateMedicine(medicine: MedicineModel): void {
+    console.log('medicinePage()');
+    localStorage.removeItem("medicineId");
+    localStorage.setItem("medicineId", medicine._id);
+    //this.router.navigate(['edit-medicine']);
+  }
+  
+  /*medicinePage(medicine: MedicineModel){
+    console.log('medicinePage()');
     localStorage.removeItem("medicineId");
     localStorage.setItem("medicineId", medicine._id);
     this.router.navigate(['edit-medicine']);
-  }
+  }*/
 }

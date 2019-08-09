@@ -16,7 +16,15 @@
     <div>
       <h3>Список средств:</h3>
       <ul>
-        <li *ngFor="let medicine of medicines"><a href="">{{medicine.nameLat}} ({{medicine.name}})</a></li>
+        <li *ngFor="let medicine of medicines">
+          <a routerLink="/medicine-page" routerLinkActive="active" (click)="updateMedicine(medicine)">
+            {{medicine.nameLat}} ({{medicine.name}})
+          </a>
+        </li>
+      
+        <!--
+          <li *ngFor="let medicine of medicines"><a routerLink="/medicine-page" routerLinkActive="active" (click)="updateMedicine(medicine)">{{medicine.nameLat}} ({{medicine.name}})</a></li>
+        //-->
       </ul>
     </div>
   
