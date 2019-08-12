@@ -27,11 +27,25 @@
       </div>-->
     </div>
 
-    <div *ngFor="let item of items; index as i">
-      <div class="form-group">
-          <label>Description2:</label>    
-          <textarea formControlName="items[i]" placeholder="Description2" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description2.errors }"></textarea>
-      </div>
+    <div formGroupName="description3">
+        <div formArrayName="items">
+            <button (click)="addItems()">Add Alias</button>
+            
+          <div *ngFor="let item of items.get('description3.items').controls; let i=index">
+              <div [formGroupName]="i">
+                  <label>{{i+1}}. Источник: </label>
+                    <input formControlName="name" /><br>
+                    <label>{{i+1}}. Описание: </label>
+                    <input formControlName="description" />
+              </div>
+              <!--<div class="form-group">
+                  <label>Источник:</label>
+                  <input type="text" [formControlName]="name" placeholder="Источник" class="form-control">
+                  <label>Описание:</label>
+                  <textarea [formControlName]="description" placeholder="Описание" class="form-control" ></textarea>
+              </div>-->
+          </div>
+        </div>
     </div>
 
     <div class="form-group">
