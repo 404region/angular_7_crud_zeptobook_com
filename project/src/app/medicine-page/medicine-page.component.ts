@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { MedicineService } from '../medicine.service';
-import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-medicine-page',
@@ -16,6 +15,7 @@ export class MedicinePageComponent implements OnInit {
   //editForm: FormGroup;
   submitted: boolean = false;
   medicineId = localStorage.getItem("medicineId");
+  items: FormArray;
   fields = {
     isRequired: true,
     description3: {
@@ -39,14 +39,11 @@ export class MedicinePageComponent implements OnInit {
     description: [''],
     description2: [''],
     symptoms: [''],
-    description3: this.formBuilder.group({
-        items: this.formBuilder.array([])
-      })
+    items: this.formBuilder.array([ this.createItem() ])
   });
 
 
   ngOnInit() {
-    this.patch();
 
     if(!this.medicineId){
       alert("Something wrong!");
@@ -60,19 +57,6 @@ export class MedicinePageComponent implements OnInit {
     });
   }
   
-  patch() {
-    const control = <FormArray>this.editForm.get('description3.items');
-    this.fields.description3.items.forEach(x => {
-      control.push(this.patchValues(x.name, x.description))
-    })
-  }
-
-  patchValues(name, description) {
-    return this.formBuilder.group({
-      label: [name],
-      value: [description]
-    })
-  }
 
   // get items() {
   //   return this.editForm.get('items') as FormArray;
@@ -85,7 +69,19 @@ export class MedicinePageComponent implements OnInit {
 
   // get the form short name to access the form fields
   get f() { return this.editForm.controls; }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+  }
   
+  addItem(): void {
+    this.items = this.editForm.get('items') as FormArray;
+    this.items.push(this.createItem());
+  }
+
   onSubmit(){
     console.log('onSubmit');
     console.log('form: and return', this.editForm.value);

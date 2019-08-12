@@ -27,25 +27,14 @@
       </div>-->
     </div>
 
-    <div formGroupName="description3">
-        <div formArrayName="items">
-            <button (click)="addItems()">Add Alias</button>
-            
-          <div *ngFor="let item of items.get('description3.items').controls; let i=index">
-              <div [formGroupName]="i">
-                  <label>{{i+1}}. Источник: </label>
-                    <input formControlName="name" /><br>
-                    <label>{{i+1}}. Описание: </label>
-                    <input formControlName="description" />
-              </div>
-              <!--<div class="form-group">
-                  <label>Источник:</label>
-                  <input type="text" [formControlName]="name" placeholder="Источник" class="form-control">
-                  <label>Описание:</label>
-                  <textarea [formControlName]="description" placeholder="Описание" class="form-control" ></textarea>
-              </div>-->
-          </div>
-        </div>
+    <button type="button" (click)="addItem()">Add Alias</button>
+    <div formArrayName="items" *ngFor="let item of editForm.get('items').controls; let i = index;">
+      <div [formGroupName]="i">
+        <input formControlName="name" placeholder="Item name">
+        <input formControlName="description" placeholder="Item description">
+      </div>
+    
+      Chosen name: {{ editForm.controls.items.controls[i].controls.name.value }}
     </div>
 
     <div class="form-group">
