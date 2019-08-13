@@ -12,38 +12,20 @@ export class MedicinePageComponent implements OnInit {
 
   constructor(private router: Router, private formBuilder: FormBuilder, private medicineService: MedicineService,) { }
 
-  //editForm: FormGroup;
+  editForm: FormGroup;
   submitted: boolean = false;
   medicineId = localStorage.getItem("medicineId");
-  items: FormArray;
-  fields = {
-    isRequired: true,
-    description3: {
-      items: [
-        {
-          name: 'Option 1',
-          description: '1'
-        },
-        {
-          name: 'Option 2',
-          description: '2'
-        }
-      ]
-    }
-  };
+  descriptions: FormArray;
   
-  editForm = this.formBuilder.group({
-    _id: ['', Validators.required],
-    nameLat: [''],
-    name: [''],
-    description: [''],
-    description2: [''],
-    symptoms: [''],
-    items: this.formBuilder.array([ this.createItem() ])
-  });
-
-
   ngOnInit() {
+    this.editForm = this.formBuilder.group({
+      _id: ['', Validators.required],
+      nameLat: [''],
+      name: [''],
+      description: [''],
+      symptoms: [''],
+      descriptions: this.formBuilder.array([ this.createItem() ])
+    });
 
     if(!this.medicineId){
       alert("Something wrong!");
@@ -54,12 +36,18 @@ export class MedicinePageComponent implements OnInit {
     this.medicineService.getMedicineById(this.medicineId).subscribe(data=>{
       console.log(data);
       this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
-    });
+
+      // for(let i = 0; i < data.descriptions.length; i++) {
+      //    console.log(data.descriptions[i]);
+      //    // this.editForm.value.descriptions.push(data.descriptions[i] as FormArray);
+      //    this.editForm.value.descriptions.push({name: 'name - источник','description - источник'} as FormArray);
+      // }
+    });    
   }
   
 
-  // get items() {
-  //   return this.editForm.get('items') as FormArray;
+  // get descriptions() {
+  //  return this.editForm.get('descriptions') as FormArray;
   // }
 
   // addItems() {
@@ -78,14 +66,14 @@ export class MedicinePageComponent implements OnInit {
   }
   
   addItem(): void {
-    this.items = this.editForm.get('items') as FormArray;
-    this.items.push(this.createItem());
+    this.descriptions = this.editForm.get('descriptions') as FormArray;
+    this.descriptions.push(this.createItem());
   }
 
   onSubmit(){
     console.log('onSubmit');
-    console.log('form: and return', this.editForm.value);
-    return;
+    console.log('form: ', this.editForm.value);
+    //return;
 
     this.submitted = true;
     
@@ -93,7 +81,7 @@ export class MedicinePageComponent implements OnInit {
       this.medicineService.updateMedicine(this.editForm.value)
       .subscribe( data => {
         console.log(data);
-        //this.router.navigate(['']);
+        this.router.navigate(['']);
       });
     }
   }
