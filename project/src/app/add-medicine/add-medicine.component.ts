@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { MedicineService } from '../medicine.service';
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
@@ -22,7 +22,8 @@ export class AddMedicineComponent implements OnInit {
       nameLat: ['', Validators.required],
       name: [''],
       description: [''],
-      symptoms: ['']
+      symptoms: [''],
+      descriptions: this.formBuilder.array([ this.createItem() ])
     });
   }
 
@@ -39,6 +40,19 @@ export class AddMedicineComponent implements OnInit {
     }
   }
 
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+  }
+    
+  get description(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+  }
   // get the form short name to access the form fields
   get f() { return this.addForm.controls; }
 

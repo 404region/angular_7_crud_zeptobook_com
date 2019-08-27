@@ -36,27 +36,20 @@ export class MedicinePageComponent implements OnInit {
     this.medicineService.getMedicineById(this.medicineId).subscribe(data=>{
       console.log('data', data);
       console.log('form before editForm.patchValue(data)', this.editForm.value);
-      //this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
 
+      // если есть в базе массивс описаниями, то стираем из массива дефолтное значение,
+      // а то личшний элемент сохраняется на форме
       if(data.descriptions.length > 0) {
         (this.editForm.get("descriptions") as FormArray)['controls'].splice(0);
       }
 
       // В ангуляре массив в реактивной форме, сам по себе не обрабатывается в patchValue
-      // поэтому используем 
-      //this.editForm.controls['descriptions'] = this.formBuilder.array(data.descriptions.map(i => this.formBuilder.group(i)));
-
+      // поэтому используем перебор массива
       for (let description = 0; description < data.descriptions.length; description++) {
         const descriptionsFormArray = this.editForm.get("descriptions") as FormArray;
         descriptionsFormArray.push(this.description);
         console.log('i: ', description);
       }
-      
-      
-     // let controlArray = <FormArray>this.editForm.controls['descriptions'];
-      
-     // const fb = this.buildGroup();
-     // controlArray.push(fb);
       console.log('data',data);
 
      this.editForm.patchValue(data);
