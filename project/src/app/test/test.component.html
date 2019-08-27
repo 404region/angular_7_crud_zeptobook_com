@@ -1,0 +1,26 @@
+<form [formGroup]="leagueForm">
+  <div class="form-header" formGroupName="league_details">
+      <label>League Name <input formControlName="name"/></label>
+      <label>Founder <input formControlName="founder"/></label>
+    </div>
+
+    <div formArrayName="teams">
+        <div class="teams" *ngFor="let team of leagueForm.get('teams').controls;
+                 let teamIndex = index" [formGroupName]="teamIndex">
+          <label>Team Name <input formControlName="team_name"/></label>
+          <!--  div with formArrayName='players' goes here (see below) -->
+        </div>
+    </div>
+
+    <div formArrayName="players">
+        <div class="players" *ngFor="let player of team.get('players').controls; let playerIndex=index" [formGroupName]="playerIndex">
+            <label>Player Name <input formControlName="player_name" /></label>
+            <label>Player Number <input formControlName="player_number"/></label>
+            <span *ngIf="player.get('player_number').touched">touched!</span>
+        </div>
+    </div>
+
+    <button type="button" (click)="addTeam()">Add Team</button>
+
+
+</form>

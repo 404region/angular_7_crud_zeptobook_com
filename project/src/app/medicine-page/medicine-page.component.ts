@@ -15,7 +15,7 @@ export class MedicinePageComponent implements OnInit {
   editForm: FormGroup;
   submitted: boolean = false;
   medicineId = localStorage.getItem("medicineId");
-  descriptions: FormArray;
+  //descriptions: FormArray;
   
   ngOnInit() {
     this.editForm = this.formBuilder.group({
@@ -34,17 +34,50 @@ export class MedicinePageComponent implements OnInit {
     }
   
     this.medicineService.getMedicineById(this.medicineId).subscribe(data=>{
-      console.log(data);
-      this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
+      console.log('data', data);
+      console.log('form before editForm.patchValue(data)', this.editForm.value);
+      //this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
 
-      // for(let i = 0; i < data.descriptions.length; i++) {
-      //    console.log(data.descriptions[i]);
-      //    // this.editForm.value.descriptions.push(data.descriptions[i] as FormArray);
-      //    this.editForm.value.descriptions.push({name: 'name - источник','description - источник'} as FormArray);
-      // }
+      if(data.descriptions.length > 0) {
+        (this.editForm.get("descriptions") as FormArray)['controls'].splice(0);
+      }
+
+      // В ангуляре массив в реактивной форме, сам по себе не обрабатывается в patchValue
+      // поэтому используем 
+      //this.editForm.controls['descriptions'] = this.formBuilder.array(data.descriptions.map(i => this.formBuilder.group(i)));
+
+      for (let description = 0; description < data.descriptions.length; description++) {
+        const descriptionsFormArray = this.editForm.get("descriptions") as FormArray;
+        descriptionsFormArray.push(this.description);
+        console.log('i: ', description);
+      }
+      
+      
+     // let controlArray = <FormArray>this.editForm.controls['descriptions'];
+      
+     // const fb = this.buildGroup();
+     // controlArray.push(fb);
+      console.log('data',data);
+
+     this.editForm.patchValue(data);
+
+      console.log('form after editForm.patchValue(data)', this.editForm.value);
     });    
   }
   
+  get description(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+  }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      description: ''
+    });
+  }
 
   // get descriptions() {
   //  return this.editForm.get('descriptions') as FormArray;
@@ -58,22 +91,17 @@ export class MedicinePageComponent implements OnInit {
   // get the form short name to access the form fields
   get f() { return this.editForm.controls; }
 
-  createItem(): FormGroup {
-    return this.formBuilder.group({
-      name: '',
-      description: ''
-    });
-  }
   
-  addItem(): void {
+  
+  /*addItem(): void {
     this.descriptions = this.editForm.get('descriptions') as FormArray;
     this.descriptions.push(this.createItem());
-  }
+  }*/
 
   onSubmit(){
     console.log('onSubmit');
     console.log('form: ', this.editForm.value);
-    //return;
+
 
     this.submitted = true;
     
