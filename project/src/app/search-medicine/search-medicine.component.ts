@@ -48,8 +48,11 @@ export class SearchMedicineComponent implements OnInit {
         (!this.searchForm.value.byName && !this.searchForm.value.byArticles && !this.searchForm.value.byDescription && !this.searchForm.value.bySymptoms )) 
       {
           queryParams = 'byName';
-         // queryOr = "$or";
-         query.query = { "$or": [{nameLat: this.searchForm.value.keyWords}, {name: this.searchForm.value.keyWords}] };
+         // queryOr = "$or";  //{$regex: 'полезно', $options: 'i'}
+         query.query = { "$or": [
+           {nameLat: {$regex:  this.searchForm.value.keyWords, $options: 'i'} },
+           {name: {$regex: this.searchForm.value.keyWords, $options: 'i'} }
+          ] };
       
           /*
           // Нифига не работает
@@ -77,7 +80,7 @@ export class SearchMedicineComponent implements OnInit {
       // ищем по описанию
       if(this.searchForm.value.byDescription) {
         query.query[queryOr] = query.query[queryOr] || [];
-        query.query[queryOr].push({"descriptions.description": {$regex: this.searchForm.value.keyWords, $options: 'i'}}); //{$regex: 'полезно', $options: 'i'}
+        query.query[queryOr].push({"descriptions.description": {$regex: this.searchForm.value.keyWords, $options: 'i'}});
       }
 
       // if(this.searchForm.value.byDescription) {
