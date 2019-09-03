@@ -74,4 +74,9 @@ export class ListMedicineComponent implements OnInit  {
     localStorage.setItem("medicineId", medicine._id);
     this.router.navigate(['edit-medicine']);
   }*/
+  
+  getAllArticles(): void {
+    alert('Статей пока нет');
+    return;
+  }
 }

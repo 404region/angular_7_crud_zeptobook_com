@@ -39,7 +39,7 @@ export class SearchMedicineComponent implements OnInit {
     let queryOr = "$or";
 
     //test
-    this.searchForm.value.keyWords = this.searchForm.value.keyWords || 'Apis';
+    this.searchForm.value.keyWords = this.searchForm.value.keyWords;
     console.log(this.searchForm.value);
 
     if(this.searchForm.value && this.searchForm.value.keyWords) {

@@ -30,7 +30,7 @@
       <div formArrayName="descriptions" *ngFor="let item of editForm.get('descriptions').controls; let i = index;">
         <div [formGroupName]="i">
           <input formControlName="name" placeholder="Источник" class="form-control">
-          <textarea formControlName="description" placeholder="Описание" class="form-control"></textarea>
+          <textarea formControlName="description" placeholder="Описание" class="form-control" rows="10"></textarea>
         </div>
       </div>
       
