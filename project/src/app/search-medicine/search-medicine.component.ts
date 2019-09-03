@@ -63,17 +63,31 @@ export class SearchMedicineComponent implements OnInit {
       // ищем по симптомом
       if(this.searchForm.value.bySymptoms) {
         query.query[queryOr] = query.query[queryOr] || [];
-        query.query[queryOr].push({symptoms: this.searchForm.value.keyWords});
+        query.query[queryOr].push({symptomsArr: this.searchForm.value.keyWords});
         console.log('query', query.query[queryOr]);
       }
+      
+     // return;
+      // if(this.searchForm.value.bySymptoms) {
+      //   query.query[queryOr] = query.query[queryOr] || [];
+      //   query.query[queryOr].push({symptoms: this.searchForm.value.keyWords});
+      //   console.log('query', query.query[queryOr]);
+      // }
+
       // ищем по описанию
       if(this.searchForm.value.byDescription) {
         query.query[queryOr] = query.query[queryOr] || [];
-        query.query[queryOr].push({description: this.searchForm.value.keyWords});
+        query.query[queryOr].push({"descriptions.description": {$regex: this.searchForm.value.keyWords, $options: 'i'}}); //{$regex: 'полезно', $options: 'i'}
       }
+
+      // if(this.searchForm.value.byDescription) {
+      //   query.query[queryOr] = query.query[queryOr] || [];
+      //   query.query[queryOr].push({description: this.searchForm.value.keyWords});
+      // }
+
       // ищем по статьям
       if(this.searchForm.value.byArticles) {
-        // Видимо в другой коллекции
+        // Видимо в другой коллекции, посмотрим когда будут статьи
       }
         
       console.log('query', query);

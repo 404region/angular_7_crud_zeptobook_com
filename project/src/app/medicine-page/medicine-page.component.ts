@@ -15,7 +15,7 @@ export class MedicinePageComponent implements OnInit {
   editForm: FormGroup;
   submitted: boolean = false;
   medicineId = localStorage.getItem("medicineId");
-  //descriptions: FormArray;
+  descriptions: FormArray;
   
   ngOnInit() {
     this.editForm = this.formBuilder.group({
@@ -37,7 +37,11 @@ export class MedicinePageComponent implements OnInit {
       console.log('data', data);
       console.log('form before editForm.patchValue(data)', this.editForm.value);
 
-      // если есть в базе массивс описаниями, то стираем из массива дефолтное значение,
+      // 
+      
+      data.symptoms = data.symptomsArr.join(',');
+
+      // если есть в базе массив с описаниями, то стираем из массива дефолтное значение,
       // а то личшний элемент сохраняется на форме
       if(data.descriptions.length > 0) {
         (this.editForm.get("descriptions") as FormArray)['controls'].splice(0);
@@ -86,20 +90,25 @@ export class MedicinePageComponent implements OnInit {
 
   
   
-  /*addItem(): void {
+  addItem(): void {
     this.descriptions = this.editForm.get('descriptions') as FormArray;
     this.descriptions.push(this.createItem());
-  }*/
+  }
 
   onSubmit(){
     console.log('onSubmit');
     console.log('form: ', this.editForm.value);
 
-
     this.submitted = true;
+    let data = this.editForm.value;
+    
+    data.symptomsArr = data.symptoms.split(',');
+    data.symptomsArr = data.symptomsArr.map(function (item) {
+      return item.toLowerCase();
+    });
     
     if(this.editForm.valid){
-      this.medicineService.updateMedicine(this.editForm.value)
+      this.medicineService.updateMedicine(data)
       .subscribe( data => {
         console.log(data);
         this.router.navigate(['']);

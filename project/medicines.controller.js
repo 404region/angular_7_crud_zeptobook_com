@@ -32,7 +32,8 @@ exports.create = (req, res) => {
             name: req.body.name,
             symptoms: req.body.symptoms,
             description: req.body.description,
-            descriptions: req.body.descriptions
+            descriptions: req.body.descriptions,
+            symptomsArr: req.body.symptomsArr
         });
 
         // Save Medicine in the database
@@ -127,7 +128,8 @@ exports.update = (req, res) => {
         name: req.body.name,
         symptoms: req.body.symptoms,
         description: req.body.description,
-        descriptions: req.body.descriptions
+        descriptions: req.body.descriptions,
+        symptomsArr: req.body.symptomsArr
     }, {new: true})
     .then(medicine => {
         if(!medicine) {

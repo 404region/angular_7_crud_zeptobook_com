@@ -5,7 +5,8 @@ const MedicineSchema = mongoose.Schema({
     nameLat: String,
     description: String,
     descriptions: Array,
-    symptoms: String
+    symptoms: String,
+    symptomsArr: Array
 }, {
     timestamps: true
 });
