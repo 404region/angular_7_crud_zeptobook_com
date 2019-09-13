@@ -8,7 +8,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: 'add-medicine', component: AddMedicineComponent },
-  { path: 'edit-medicine', component: MedicinePageComponent},
+  { path: 'edit-medicine', component: EditMedicineComponent},
   { path: 'medicine-page', component: MedicinePageComponent},
   { path: '', component: ListMedicineComponent, pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

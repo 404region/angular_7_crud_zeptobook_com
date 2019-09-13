@@ -5,9 +5,10 @@
           <h1>Gomeo</h1>
       </div>
       <div class="col align-self-center">
-          <button (click)="getAllMedicines()" class="btn btn-info">Список средств</button>
+        <app-menu></app-menu>
+          <!-- <button (click)="getAllMedicines()" class="btn btn-info">Список средств</button>
           <button (click)="addMedicine()" class="btn btn-info">Добавить средство</button>
-          <button (click)="getAllArticles()" class="btn btn-info">Статьи</button>
+          <button (click)="getAllArticles()" class="btn btn-info">Статьи</button> -->
       </div>
     </div>
 
@@ -17,7 +18,9 @@
       <h3>Список средств:</h3>
       <ul>
         <li *ngFor="let medicine of medicines">
-          <a routerLink="/medicine-page" routerLinkActive="active" (click)="updateMedicine(medicine)">
+          <a routerLink="/medicine-page" routerLinkActive="active" (click)="watchMedicine(medicine)">
+          <!-- <a routerLink="/edit-medicine" routerLinkActive="active" (click)="updateMedicine(medicine)"> -->
+          <!-- <a routerLink="/medicine-page" routerLinkActive="active" (click)="updateMedicine(medicine)"> -->
             {{medicine.nameLat}} ({{medicine.name}})
           </a>
         </li>

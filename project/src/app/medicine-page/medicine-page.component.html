@@ -1,52 +1,30 @@
-<div class="col-md-8">
-  <h2 class="text-center">Medicine edit</h2>
-  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-    
-    <div class="form-group">
-        <label>Имя на латинском:</label>
-        <input type="text" formControlName="nameLat" placeholder="Латинское название" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nameLat.errors }">
-        <div *ngIf="submitted && f.nameLat.errors">
-          <div *ngIf="f.nameLat.errors.required">nameLat is required</div>
+<div class="container col-md-12"> 
+    <div class="row">
+        <div class="col">
+            <h1>Gomeo</h1>
+        </div>
+        <div class="col align-self-center">
+          <app-menu></app-menu>
         </div>
       </div>
+</div>
 
-    <div class="form-group">
-      <label>Имя на русском (если есть):</label>
-      <input type="text" formControlName="name" placeholder="Имя" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-      <!--<div *ngIf="submitted && f.name.errors">
-        <div *ngIf="f.name.errors.required">Name is required</div>
-      </div>-->
+<div class="col-md-10">
+  <h3 class="text-center">
+    {{medicine.nameLat}}
+  </h3> 
+  <h6>{{medicine.name}}</h6>  
+  <a routerLink="/edit-medicine" routerLinkActive="active">Редактировать</a>
+
+  <div class="symptoms">
+    <p>{{medicine.symptoms}}</p>
+  </div>
+
+  <div class="description">
+    <div *ngFor="let item of medicine.descriptions">
+        <p>{{item.name}}</p>
+        <p>{{item.description}}</p>
     </div>
+  </div>
 
-
-    <!--<div class="form-group">
-      <label>Description:</label>
-      <textarea formControlName="description" placeholder="Description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
-    </div>-->
-
-    <div class="form-group">
-      <label>Описания лекарства:</label><br>
-      <!--<div formArrayName="descriptions" *ngFor="let item of editForm.get('descriptions').controls; let i = index;">//-->
-      <div formArrayName="descriptions" *ngFor="let item of editForm.get('descriptions').controls; let i = index;">
-        <div [formGroupName]="i">
-          <input formControlName="name" placeholder="Источник" class="form-control">
-          <textarea formControlName="description" placeholder="Описание" class="form-control" rows="10"></textarea>
-        </div>
-      </div>
-      
-      <button type="button" (click)="addItem()">Добавить описание</button>
-    </div>
-
-    <div class="form-group">
-      <label>Симптомы:</label>
-      <textarea formControlName="symptoms" placeholder="Симптомы" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.symptoms.errors }"></textarea>
-      <!--<div *ngIf="submitted && f.symptoms.errors">
-        <div *ngIf="f.symptoms.errors.required">Symptoms is required</div>
-      </div>-->
-    </div>
-  
-    <button type="submit"  class="btn btn-info">Save</button>
-    
-    <button type="button"  class="btn btn-delete" (click)="deleteMedicine(medicine)">Delete</button>
-  </form>
 </div>

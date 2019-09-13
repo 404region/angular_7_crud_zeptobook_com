@@ -62,7 +62,14 @@ export class ListMedicineComponent implements OnInit  {
   }
   
   updateMedicine(medicine: MedicineModel): void {
-    console.log('medicinePage()');
+    console.log('update medicinePage()');
+    localStorage.removeItem("medicineId");
+    localStorage.setItem("medicineId", medicine._id);
+    //this.router.navigate(['edit-medicine']);
+  }
+
+  watchMedicine(medicine: MedicineModel): void {
+    console.log('watch medicinePage()');
     localStorage.removeItem("medicineId");
     localStorage.setItem("medicineId", medicine._id);
     //this.router.navigate(['edit-medicine']);

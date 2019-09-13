@@ -14,7 +14,8 @@ import { SearchMedicineComponent } from './search-medicine/search-medicine.compo
 import { MedicineSearchDataService } from './medicine-search-data.service';
 import { MedicinePageComponent } from './medicine-page/medicine-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { TestComponent } from './test/test.component'
+import { TestComponent } from './test/test.component';
+import { MenuComponent } from './menu/menu.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TestComponent } from './test/test.component'
     SearchMedicineComponent,
     MedicinePageComponent,
     PageNotFoundComponent,
-    TestComponent
+    TestComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
